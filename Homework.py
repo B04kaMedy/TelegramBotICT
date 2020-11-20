@@ -20,7 +20,7 @@ class Homework:
 
     def set_checked(self, mark):
         if self.checked:
-            out('Are you sure, that you want to change the mark?')
+            log('Are you sure, that you want to change the mark?')
             if get_answer():
                 self.checked = False
                 self.set_checked(mark)
@@ -30,7 +30,7 @@ class Homework:
 
     def submit(self):
         if self.complete:
-            out('Are you sure? Your last submission will be deleted!')
+            log('Are you sure? Your last submission will be deleted!')
             if get_answer():
                 self.complete = False
 
@@ -42,8 +42,8 @@ class Homework:
                 self.complete = True
 
                 if bot.push(self):
-                    out('Ok, your submission completed successfully!')
+                    log('Ok, your submission completed successfully!')
                 else:
-                    out('Something went wrong(((')
+                    log('Something went wrong(((')
             else:
-                out('You can not submit, because this task is over: deadline ended...')
+                log('You can not submit, because this task is over: deadline ended...')

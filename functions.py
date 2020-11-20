@@ -1,4 +1,4 @@
-def out(message: str) -> None:
+def log(message: str) -> None:
     print(message)
 
 
