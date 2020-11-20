@@ -8,12 +8,26 @@ class Homework:
 
     def __init__(self,
                  task: int,
-                 deadline: datetime,
-                 complete: bool,
-                 checked: bool,
-                 mark: Optional[int]):
+                 deadline: datetime):
         self.task = task
         self.deadline = deadline
+
+    def make_homework(self, solution: str):
+        return CompletedHomework(self.task, self.deadline, True, solution, False, None)
+
+
+class CompletedHomework(Homework):
+
+    def __init__(self,
+                 task: int,
+                 deadline: datetime,
+                 complete: bool,
+                 solution: str,
+                 checked: bool,
+                 mark: Optional[int]):
+        super().__init__(task, deadline)
+
+        self.solution = solution
         self.complete = complete
         self.checked = checked
         self.mark = mark
