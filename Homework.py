@@ -7,7 +7,7 @@ from functions import *
 class Homework:
 
     def __init__(self,
-                 task: str,
+                 task: int,
                  deadline: datetime,
                  complete: bool,
                  checked: bool,
