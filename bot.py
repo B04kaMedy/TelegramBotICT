@@ -14,24 +14,24 @@ def send_welcome(message):
 
 
 # Teacher options functions
+# 
 homework_add = 'Добавить домашнее задание'
-grades = 'Выставить оценки'
+grades_teacher = 'Выставить оценки'
 exel_download = 'Скачать exel-таблицу'
 
 @bot.message_handler(commands=['teacher'])
-def teacher_options(message):
+def teacher_start(message):
 	chat_id = message.chat.id
 	markup = types.ReplyKeyboardMarkup() 
 	itembtna = types.KeyboardButton(homework_add)
-	itembtnv = types.KeyboardButton(grades)
+	itembtnv = types.KeyboardButton(grades_teacher)
 	itembtnc = types.KeyboardButton(exel_download)
 
 	markup.row(itembtna)
 	markup.row(itembtnv)
 	markup.row(itembtnc)
 	msg = bot.send_message(chat_id, 'Your current options: ' + '\n', reply_markup=markup)
-	bot.register_next_step_handler(msg, option_next)
-	pass
+	bot.register_next_step_handler(msg, teacher_next)
 
 
 
@@ -39,7 +39,9 @@ def teacher_options(message):
 homework_new = 'Добавить новое дз'
 homework_edit = 'Редактировать дз'
 
-def option_next(message):
+exit_message = "Пожалуйста, введите команду снова"
+
+def teacher_next(message):
 	chat_id = message.chat.id
 	option = message.text
 	if (option == homework_add):
@@ -51,7 +53,7 @@ def option_next(message):
 		msg = bot.send_message(chat_id, "Choose next option" + '\n', reply_markup=markup)
 		bot.register_next_step_handler(msg, homework_next)
 
-	elif (option == grades):
+	elif (option == grades_teacher):
 		msg = bot.send_message(chat_id, "Выберите ученика" + '\n')
 		bot.register_next_step_handler(msg, grades_next)
 
@@ -65,19 +67,65 @@ def option_next(message):
 def homework_next(message):
 	markup = types.ReplyKeyboardRemove(selective=False)
 
-	bot.reply_to(message, "f", reply_markup=markup)   # Remove markup
+	bot.reply_to(message, exit_message, reply_markup=markup)   # Remove markup
 
 
 def grades_next(message):
 	markup = types.ReplyKeyboardRemove(selective=False)
 	
-	bot.reply_to(message, "f", reply_markup=markup)  
+	bot.reply_to(message, exit_message, reply_markup=markup)  
 
 
 def exel_download_next(message):
 	markup = types.ReplyKeyboardRemove(selective=False)
 
-	bot.reply_to(message, "f", reply_markup=markup)
+	bot.reply_to(message, exit_message, reply_markup=markup)
+
+
+
+
+# Student options functions
+#
+homework_download = "Загрузить дз"
+grades_student = "Посмотреть баллы"
+deadlines_watch = "Посмотреть дедлайны"
+
+@bot.message_handler(commands=['student'])
+def student_start(message):
+	chat_id = message.chat.id
+	markup = types.ReplyKeyboardMarkup() 
+	itembtna = types.KeyboardButton(homework_download)
+	itembtnv = types.KeyboardButton(grades_student)
+	itembtnc = types.KeyboardButton(deadlines_watch)
+
+	markup.row(itembtna)
+	markup.row(itembtnv)
+	markup.row(itembtnc)
+	msg = bot.send_message(chat_id, 'Your current options: ' + '\n', reply_markup=markup)
+	bot.register_next_step_handler(msg, student_next)
+
+
+def student_next(message):
+	chat_id = message.chat.id
+	option = message.text
+	if (option == homework_download):
+		msg = bot.send_message(chat_id, "Скачать дз функция" + '\n')
+		bot.register_next_step_handler(msg, homework_next)
+
+	elif (option == grades_student):
+		msg = bot.send_message(chat_id, "Оценки студент функция" + '\n')
+
+	elif (option == deadlines_watch):
+		msg = bot.send_message(chat_id, "дедлайны ученик функция")
+	else:
+		return
+
+
+
+
+
+
+
 
 
 
@@ -86,7 +134,7 @@ def exel_download_next(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
 	markup = types.ReplyKeyboardRemove(selective=False)
-	bot.reply_to(message, "Sorry, I don't speek that language", reply_markup=markup) # Remove markup
-	pass
+	bot.reply_to(message, "Пожалуйста, снова введите команду", reply_markup=markup) # Remove markup
+
 
 bot.polling()
