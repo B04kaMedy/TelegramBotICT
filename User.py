@@ -1,3 +1,5 @@
+from typing import List
+
 from Group import Group
 from Role import Role
 
@@ -8,7 +10,7 @@ class User:
                  id: int,
                  name: str,
                  tele_id: str,
-                 *group_list: (Group, *Role)):
+                 *group_list: (Group, List[Role])):
         self.id = id
         self.name = name
         self.tele_id = tele_id
