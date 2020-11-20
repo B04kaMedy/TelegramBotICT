@@ -10,7 +10,7 @@ class User:
                  id: int,
                  name: str,
                  tele_id: int,
-                 *group_list: (Group, List[Role])):
+                 group_list: List[(Group, List[Role])]):
         self.id = id
         self.name = name
         self.tele_id = tele_id
