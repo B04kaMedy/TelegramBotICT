@@ -9,7 +9,7 @@ class User:
     def __init__(self,
                  id: int,
                  name: str,
-                 tele_id: str,
+                 tele_id: int,
                  *group_list: (Group, List[Role])):
         self.id = id
         self.name = name
