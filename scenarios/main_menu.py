@@ -6,6 +6,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 def add_admin_buttons(markup):
     markup.add(KeyboardButton("Пригласить человека"))
     markup.add(KeyboardButton("Удалить человека"))
+    markup.add(KeyboardButton("Изменить роль"))
 
 
 def add_teacher_buttons(markup):
