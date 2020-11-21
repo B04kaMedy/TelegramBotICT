@@ -6,6 +6,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from filters import callback
 from scenarios.main_menu import send_main_menu
 
+
 @bot.message_handler(func=callback("Проверить дз"))
 def check_homework(message):
     chat_id = message.chat.id
@@ -18,7 +19,9 @@ def check_homework(message):
 
     bot.register_next_step_handler(message, check_next)
 
+
 states = dict()
+
 
 def check_next(message):
     chat_id = message.chat.id
@@ -28,13 +31,20 @@ def check_next(message):
 
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
-    for completed_homework in homework.completed_homeworks:
-        if completed_homework.is_checked():
-            continue
-        markup.add(KeyboardButton(completed_homework.student.name))
-    
-    bot.send_message(chat_id, "ВЫберите ученика", reply_markup=markup)
+    hws = homework.completed_homeworks  # type: list
+    hws.sort(key=lambda e: e.is_checked())
+
+    for hw in hws:
+        button_name = hw.student.name
+
+        if hw.is_checked():
+            button_name += ' (+)'
+
+        markup.add(KeyboardButton(button_name))
+
+    bot.send_message(chat_id, "Выберите ученика", reply_markup=markup)
     bot.register_next_step_handler(message, check_next2)
+
 
 def check_next2(message):
     chat_id = message.chat.id
@@ -50,6 +60,7 @@ def check_next2(message):
     bot.send_message(chat_id, "Оценка за дз:")
     bot.register_next_step_handler(message, check_end)
 
+
 def check_end(message):
     chat_id = message.chat.id
     completed_homework = states[chat_id]
@@ -59,5 +70,3 @@ def check_end(message):
 
     bot.send_message(chat_id, "Проверено")
     send_main_menu(message)
-
-

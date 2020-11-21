@@ -6,6 +6,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from filters import callback
 from scenarios.main_menu import send_main_menu
 
+
 @bot.message_handler(func=callback("Сдать домашнее задание"))
 def push_homework(message):
     chat_id = message.chat.id
@@ -18,13 +19,16 @@ def push_homework(message):
 
     bot.register_next_step_handler(message, push_next)
 
+
 states = dict()
+
 
 def push_next(message):
     states[message.chat.id] = message.text
 
     bot.send_message(message.chat.id, "Отправьте файл с домашкой")
     bot.register_next_step_handler(message, push_next2)
+
 
 def push_next2(message):
     user = User.from_telegram_id(message.chat.id)

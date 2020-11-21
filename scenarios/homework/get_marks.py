@@ -6,6 +6,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from filters import callback
 from scenarios.main_menu import send_main_menu
 
+
 @bot.message_handler(func=callback("Посмотреть баллы"))
 def get_marks(message):
     chat_id = message.chat.id
