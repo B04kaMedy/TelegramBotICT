@@ -4,6 +4,7 @@ from models import Homework, Group
 from db import session
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from filters import callback
+from scenarios.main_menu import send_main_menu
 
 @bot.message_handler(func=callback("Скачать домашнее задание"))
 def add_homework(message):
