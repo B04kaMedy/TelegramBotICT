@@ -3,7 +3,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import NullPool
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine("mysql+pymysql://ict:ictict@localhost/ict")
+engine = create_engine("postgresql://myuser:mypass@localhost/mydb")
 
 factory = sessionmaker(bind=engine)
 session = scoped_session(factory)

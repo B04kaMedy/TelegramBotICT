@@ -36,7 +36,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String(150))
-    telegram_id = Column(String(150))
+    telegram_id = Column(Integer)
     telegram_nickname = Column(String(150))
 
     groups = relationship('Group', secondary="groups_users", back_populates='users')
