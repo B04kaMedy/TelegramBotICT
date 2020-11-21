@@ -11,7 +11,7 @@ from scenarios import register
 from scenarios.groups import create as create_group
 from scenarios.groups import set_current as set_current_group
 from scenarios.admin import invite, remove
-from scenarios.homework import add, check, delete, edit, download, push
+from scenarios.homework import add, check, delete, download, push
 
 @bot.message_handler(func=everything)
 def wrong_message(msg):
