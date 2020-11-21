@@ -23,7 +23,8 @@ def fio(msg):
 
     user = User(
         name=name,
-        telegram_id=chat_id
+        telegram_id=chat_id,
+        telegram_nickname=msg.from_user.username
     )
     session.add(user)
     session.commit()

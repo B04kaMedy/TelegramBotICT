@@ -36,7 +36,8 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String(150))
-    telegram_id = Column(String)
+    telegram_id = Column(String(150))
+    telegram_nickname = Column(String(150))
 
     groups = relationship('Group', secondary="groups_users", back_populates='users')
     completed_homeworks = relationship('CompletedHomework', back_populates='student')
@@ -44,6 +45,10 @@ class User(Base):
     @staticmethod
     def from_telegram_id(tg_id):
         return session.query(User).filter_by(telegram_id=tg_id).one_or_none()
+
+    @staticmethod
+    def from_telegram_nickname(tg_nick):
+        return session.query(User).filter_by(telegram_nickname=tg_nick).one_or_none()
 
 class Homework(Base):
     __tablename__ = 'homeworks'

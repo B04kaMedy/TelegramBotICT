@@ -15,8 +15,6 @@ def invite_success(message):
     chat_id = message.chat.id
     user_names[chat_id] = message.text 
 
-    # TODO проверка валидности имени
-
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
     for role in Role:
@@ -37,10 +35,12 @@ def role_success(message):
 
     # TODO проверка зареган ли юзер
 
-    invite_message = bot.send_message(username, f"Вас пригласили в группу {message.current_group.name}", reply_markup=markup)
+    to_user = User.from_telegram_nickname(username)
+
+    invite_message = bot.send_message(to_user.telegram_id, f"Вас пригласили в группу {message.current_group.name}", reply_markup=markup)
     bot.register_next_step_handler(invite_message, accept_inventation)
 
-    current_inventation[invite_message.chat.id] = (message.current_group, Role[message.text])
+    current_inventation[invite_message.chat.id] = (message.current_group, Role(message.text))
 
     send_main_menu(message)
 

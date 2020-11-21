@@ -1,7 +1,7 @@
 from models import User
 
 def authorized(msg):
-    return User.from_telegram_id(msg.from_user.id) is not None
+    return User.from_telegram_id(msg.chat.id) is not None
 
 def not_authorized(msg):
     return not authorized(msg)

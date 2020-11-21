@@ -8,11 +8,12 @@ from scenarios.main_menu import send_main_menu
 current_groups = dict()
 # TODO: уебать это отседова в бд
 
-def has_not_group(message):
-    # бля крч какого-то хуя middleware не работают, фиксим велосипедами
-    # TODO поменять на middleware
+@bot.middleware_handler(update_types=['message'])
+def set_current_group(bot_instance, message):
     message.current_group = current_groups.get(message.chat.id)
-    return message.chat.id not in current_groups.keys()
+    
+def has_not_group(message):
+    return message.current_group is None
 
 @bot.message_handler(func=has_not_group)
 def select_group(message):
