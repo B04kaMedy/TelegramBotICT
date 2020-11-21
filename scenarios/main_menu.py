@@ -12,12 +12,15 @@ def add_teacher_buttons(markup):
     markup.add(KeyboardButton("Добавить дз"))
     markup.add(KeyboardButton("Проверить дз"))
     markup.add(KeyboardButton("Экспорт в Excel"))
+    markup.add(KeyboardButton("Проверить входящие сообщения"))
 
 
 def add_student_buttons(markup):
     markup.add(KeyboardButton("Скачать домашнее задание"))
     markup.add(KeyboardButton("Сдать домашнее задание"))
     markup.add(KeyboardButton("Посмотреть баллы"))
+    markup.add(KeyboardButton("Написать преподавателю"))
+    markup.add(KeyboardButton("Проверить входящие сообщения"))
 
 
 def send_main_menu(message):

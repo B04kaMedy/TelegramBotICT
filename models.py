@@ -49,6 +49,8 @@ class User(Base):
     groups = relationship('Group', secondary="groups_users", back_populates='users')
     completed_homeworks = relationship('CompletedHomework', back_populates='student')
 
+    inbox = Column(String)
+
     @staticmethod
     def from_telegram_id(tg_id):
         return session.query(User).filter_by(telegram_id=tg_id).one_or_none()
@@ -56,6 +58,9 @@ class User(Base):
     @staticmethod
     def from_telegram_nickname(tg_nick):
         return session.query(User).filter_by(telegram_nickname=tg_nick).one_or_none()
+
+    def is_inbox_empty(self) -> bool:
+        return self.inbox != '' or self.inbox is not None
 
 
 class Homework(Base):
@@ -89,4 +94,4 @@ class CompletedHomework(Base):
         return self.mark is not None
 
     def has_comment(self):
-        return self.comment is not None and self.comment != ''
+        return self.comment is not None or self.comment != ''
