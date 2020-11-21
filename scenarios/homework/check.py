@@ -1,6 +1,6 @@
 from bot import bot
 from telebot import types
-from models import Homework, Group, CompletedHomework, User
+from models import Homework, CompletedHomework, User
 from db import session
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from filters import callback
