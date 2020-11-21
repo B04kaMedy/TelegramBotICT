@@ -17,9 +17,3 @@ def upload_homework(message):
     session.add(homework)
     session.commit()
     bot.send_message(message, "Файл загружен!")
-
-# def set_deadline(message):
-#     chat_id = message.chat.id
-#     homework = user.current_homework
-#     homework.deadline = message.text
-#     #Ой да фпесду
