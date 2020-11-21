@@ -148,11 +148,32 @@ def remove_user_from_group(user_pointer, group_pointer) -> bool:
         return False
 
 
-@unchecked
 def add_role_in_group_to_user(user_pointer, group_pointer, role: Role) -> bool:
     user = get_user(user_pointer)
     group = get_group(group_pointer)
 
     if user.group_list.__contains__(group):
-        user[user.group_list.index(group)]
-        return True
+        group = get_group(group_pointer)
+
+        roles = user.group_list.get(group)  # type: List[Role]
+
+        if roles.__contains__(role):
+            log('This user already has this role. '
+                'You can not give it to him twice!')
+            return False
+        else:
+            if roles.__contains__(Role.WORKER) and role == Role.TEACHER:
+                log('You want to give \'teacher\' role to worker. '
+                    'Are you sure?')
+                if get_answer():
+                    user.group_list.get(group).append(role)
+
+                    log('Do you want this user to stay \'worker\'?')
+                    if get_answer():
+                        user.group_list.get(group).remove(Role.WORKER)
+
+                    return True
+                return False
+            else:
+                user.group_list.get(group).append(role)
+            return True
