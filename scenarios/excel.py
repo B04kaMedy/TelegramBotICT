@@ -34,4 +34,8 @@ def excel_export(message):
 
             excel_db.review_on_student(student.name, str(hw.id), str(mark))
 
-    converter.push_to_excel("/tmp/mark_table.xlsx", group.name)
+    file_name = "/tmp/mark_table.xlsx"
+
+    converter.push_to_excel(file_name, group.name)
+
+    bot.send_document(message.chat.id, open(file_name))
