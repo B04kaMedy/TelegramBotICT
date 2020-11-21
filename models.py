@@ -61,11 +61,14 @@ class Homework(Base):
 
     group_id = Column(Integer, ForeignKey("groups.id"))
     group = relationship('Group', back_populates='homeworks')
+    completed_homeworks = relationship('CompletedHomeworks', back_populates='homework')
 
 class CompletedHomework(Base):
     __tablename__ = 'completed_homeworks'
     id = Column(Integer, primary_key=True)
     file_telegram_id = Column(String(150))
+    homework_id = Column(Integer, ForeignKey("homeworks.id"))
+    homework = relationship('Homework', back_populates='completed_homeworks')
 
     student_id = Column(Integer, ForeignKey("users.id"))
     student = relationship('User', back_populates='completed_homeworks')

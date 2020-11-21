@@ -2,7 +2,6 @@ from bot import bot
 from telebot import types
 from models import Homework
 from db import session
-
 from filters import callback
 
 @bot.message_handler(func=callback("Добавить дз"))
