@@ -28,6 +28,7 @@ def push_next(message):
 
 def push_next2(message):
     user = User.from_telegram_id(message.chat.id)
+    chat_id = message.chat.id
 
     homework = session.query(Homework).get(states[message.chat.id])
     completed = CompletedHomework(
@@ -35,3 +36,7 @@ def push_next2(message):
         file_telegram_id=message.document.file_id,
         student=user
     )
+
+    bot.send_message(chat_id, "Файл загружен!")
+
+    send_main_menu(message)
