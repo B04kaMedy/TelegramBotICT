@@ -12,9 +12,9 @@ def add_teacher_buttons(markup):
     markup.add(KeyboardButton("Экспорт в эксель"))
 
 def add_student_buttons(markup):
-    markup.add(KeyboardButton("Посмотреть дэдлайны"))
+    markup.add(KeyboardButton("Скачать домашнее задание"))
+    markup.add(KeyboardButton("Сдать домашнее задание"))
     markup.add(KeyboardButton("Посмотреть баллы"))
-    markup.add(KeyboardButton("Сдать дз"))
 
 def send_main_menu(message):
     group = message.current_group

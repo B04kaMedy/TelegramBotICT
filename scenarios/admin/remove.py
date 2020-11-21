@@ -12,11 +12,18 @@ def remove(message):
     for user in message.current_group.users:
         markup.add(KeyboardButton(user))
     
-    bot.send_message(message, "Выберите человека:", reply_markup=markup)
+    bot.send_message(chat_id, "Выберите человека:", reply_markup=markup)
     bot.register_next_step_handler(message, remove_success)
 
 def remove_success(message):
     chat_id = message.chat.id
     group_name = message.current_group.name
-    
+    user = User.from_telegram_nickname(message.text)
+
+    message.current_group.delete_user(user)
+    bot.send_message(chat_id, "Пользователь удалён")
+
+    send_main_menu(message)
+
+
     
