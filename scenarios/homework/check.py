@@ -50,7 +50,11 @@ def check_next2(message):
     chat_id = message.chat.id
     homework = states[chat_id]
     
-    username = message.text
+    username = message.text  # type: str
+
+    if username.endswith(' (+)'):
+        username = username[:-4]
+
     user = session.query(User).filter_by(name=username).one()
     completed_homework = session.query(CompletedHomework).filter_by(student_id=user.id, homework_id=homework.id).one()
     states[chat_id] = completed_homework
