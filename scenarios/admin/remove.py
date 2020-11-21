@@ -10,7 +10,7 @@ def remove(message):
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
     for user in message.current_group.users:
-        markup.add(KeyboardButton(user))
+        markup.add(KeyboardButton(user.telegram_nickname))
     
     bot.send_message(chat_id, "Выберите человека:", reply_markup=markup)
     bot.register_next_step_handler(message, remove_success)
