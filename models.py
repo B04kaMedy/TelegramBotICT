@@ -29,6 +29,9 @@ class Group(Base):
         session.add(relation)
         session.commit()
     
+    def delete_user(self, user: 'User'):
+        session.query(Group_User).filter_by(group_id=self.id, user_id=user.id).delete()
+    
     def user_has_role(self, user: 'User', role: Role):
         return session.query(Group_User).filter_by(group_id=self.id, user_id=user.id, role=role).count() > 0
 
