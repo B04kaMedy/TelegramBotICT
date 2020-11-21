@@ -5,6 +5,8 @@ from db import session
 from filters import callback
 
 
+# TODO    deadline
+
 @bot.message_handler(func=callback("Добавить дз"))
 def add_homework(message):
     chat_id = message.chat.id
