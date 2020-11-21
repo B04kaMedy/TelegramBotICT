@@ -11,7 +11,7 @@ def add_admin_buttons(markup):
 def add_teacher_buttons(markup):
     markup.add(KeyboardButton("Добавить дз"))
     markup.add(KeyboardButton("Проверить дз"))
-    markup.add(KeyboardButton("Экспорт в эксель"))
+    markup.add(KeyboardButton("Экспорт в Excel"))
 
 
 def add_student_buttons(markup):
