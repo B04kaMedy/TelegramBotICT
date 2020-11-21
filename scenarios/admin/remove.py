@@ -1,8 +1,9 @@
 from bot import bot
 from filters import callback
-from models import Role, User, Group
+from models import User
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from scenarios.main_menu import send_main_menu
+
 
 @bot.message_handler(func=callback("Удалить человека"))
 def remove(message):
@@ -15,6 +16,7 @@ def remove(message):
     bot.send_message(chat_id, "Выберите человека:", reply_markup=markup)
     bot.register_next_step_handler(message, remove_success)
 
+
 def remove_success(message):
     chat_id = message.chat.id
     group_name = message.current_group.name
@@ -24,6 +26,3 @@ def remove_success(message):
     bot.send_message(chat_id, "Пользователь удалён")
 
     send_main_menu(message)
-
-
-    
