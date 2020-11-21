@@ -76,4 +76,4 @@ class CompletedHomework(Base):
     marks = Column(Integer, nullable=True)
 
     def is_checked(self):
-        return marks is not None
+        return self.marks is not None

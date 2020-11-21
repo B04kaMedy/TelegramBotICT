@@ -37,6 +37,9 @@ def push_next2(message):
         student=user
     )
 
+    session.add(completed)
+    session.commit()
+
     bot.send_message(chat_id, "Файл загружен!")
 
     send_main_menu(message)

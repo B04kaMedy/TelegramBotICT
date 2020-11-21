@@ -28,21 +28,21 @@ def check_next(message):
 
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
-    for completed_homework in homework.completed_homeworks():
-        if completed_homework.is_check():
+    for completed_homework in homework.completed_homeworks:
+        if completed_homework.is_checked():
             continue
         markup.add(KeyboardButton(completed_homework.student.name))
     
     bot.send_message(chat_id, "ВЫберите ученика", reply_markup=markup)
     bot.register_next_step_handler(message, check_next2)
 
-def check_next2(message)
+def check_next2(message):
     chat_id = message.chat.id
     homework = states[chat_id]
     
     username = message.text
-    user = session.query(User).filter_by(name=username)
-    completed_homework = session.query(CompletedHomework).filter_by(student=user, homework=homework).one()
+    user = session.query(User).filter_by(name=username).one()
+    completed_homework = session.query(CompletedHomework).filter_by(student_id=user.id, homework_id=homework.id).one()
     states[chat_id] = completed_homework
 
     bot.send_document(message.chat.id, completed_homework.file_telegram_id)
