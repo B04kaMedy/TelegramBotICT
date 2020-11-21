@@ -19,7 +19,19 @@ def fio(msg):
     chat_id = msg.chat.id
     name = msg.text
 
-    # TODO: хоть какая-то проверка корректности ФИО
+    # проверка корректности ФИО
+    a = 0
+    name_split = name.split(" ")
+    while a == 0:
+        if bool(re.search('[а-яА-Я]', name)) and len(name_split) == 3:
+            a == 1
+        else:
+            bot.send_message(chat_id, "Пожалуйста, используйте буквы только русского алфавита.")
+            bot.send_message(chat_id, "Имя должно быть в формате <Имя Фамилия Отчество>")
+            bot.register_next_step_handler(msg, fio)
+            return
+        a = 1
+    #
 
     user = User(
         name=name,
