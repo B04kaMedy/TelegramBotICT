@@ -53,7 +53,7 @@ def check_next2(message):
 def check_end(message):
     chat_id = message.chat.id
     completed_homework = states[chat_id]
-    completed_homework.mark = int(message.text)
+    completed_homework.marks = int(message.text)
 
     session.commit()
 

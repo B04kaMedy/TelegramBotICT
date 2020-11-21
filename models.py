@@ -63,6 +63,9 @@ class Homework(Base):
     group = relationship('Group', back_populates='homeworks')
     completed_homeworks = relationship('CompletedHomework', back_populates='homework')
 
+    def get_completed_from_student(self, user: User):
+        return session.query(CompletedHomework).filter_by(homework=self, student=user).one_or_none()
+
 class CompletedHomework(Base):
     __tablename__ = 'completed_homeworks'
     id = Column(Integer, primary_key=True)

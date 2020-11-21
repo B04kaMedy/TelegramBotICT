@@ -15,7 +15,7 @@ def get_marks(message):
     s = ''
     for hw in completed_homeworks:
         if hw.is_checked():
-            s += f'Дз {hw.id}, оценка: {hw.mark}\n'
+            s += f'Дз {hw.id}, оценка: {hw.marks}\n'
         else:
             s += f'Дз {hw.id}, не проверено\n'
     bot.send_message(chat_id, s)

@@ -1,11 +1,10 @@
 import csv
 from typing import List, Dict, Optional
 
-from functions import *
+from excel.functions import *
 
 _students = dict()  # type: dict[str: List[str]]
 _columns = ['student']  # type: List[str]
-
 
 def push_to_tmp_container(file_name: str):
     for student_name in _students:
@@ -51,6 +50,14 @@ def import_from_tmp_container(file_name: str):
                 _columns = row
             else:
                 _students.update(pack_student(row))
+
+
+def clear_table():
+    global _columns
+    global _students
+    
+    _students = dict()
+    _columns = ['student']
 
 
 def add_student(name: str) -> bool:
