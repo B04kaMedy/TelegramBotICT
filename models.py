@@ -82,7 +82,11 @@ class CompletedHomework(Base):
     student_id = Column(Integer, ForeignKey("users.id"))
     student = relationship('User', back_populates='completed_homeworks')
 
-    marks = Column(Integer, nullable=True)
+    mark = Column(Integer, nullable=True)
+    comment = Column(String, nullable=True)
 
     def is_checked(self):
-        return self.marks is not None
+        return self.mark is not None
+
+    def has_comment(self):
+        return self.comment is not None and self.comment != ''

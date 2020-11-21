@@ -62,13 +62,48 @@ def check_next2(message):
     bot.send_document(message.chat.id, completed_homework.file_telegram_id)
 
     bot.send_message(chat_id, "Оценка за дз:")
-    bot.register_next_step_handler(message, check_end)
+    bot.register_next_step_handler(message, check_next3)
+
+
+def check_next3(message):
+    chat_id = message.chat.id
+    completed_homework = states[chat_id]
+    completed_homework.mark = int(message.text)
+
+    markup = ReplyKeyboardMarkup(one_time_keyboard=True)
+
+    markup.add(KeyboardButton('Да'))
+    markup.add(KeyboardButton('Нет'))
+
+    bot.send_message(chat_id, "Хотите ли Вы оставить комментарий?", reply_markup=markup)
+    bot.register_next_step_handler(message, check_next4)
+
+
+any_messages = False
+
+
+def check_next4(message):
+    chat_id = message.chat.id
+
+    global any_messages
+
+    if message.text == 'Нет':
+        any_messages = False
+    else:
+        any_messages = True
+        bot.send_message(chat_id, "Ваш комментарий:")
+
+    bot.register_next_step_handler(message, check_next4)
 
 
 def check_end(message):
     chat_id = message.chat.id
     completed_homework = states[chat_id]
-    completed_homework.marks = int(message.text)
+
+    if any_messages:
+        completed_homework.comment = message.text
+    else:
+        completed_homework.comment = None
 
     session.commit()
 

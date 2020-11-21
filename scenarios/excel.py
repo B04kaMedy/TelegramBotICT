@@ -25,9 +25,15 @@ def excel_export(message):
 
         for hw in hws:
             completed = hw.get_completed_from_student(student)
-            mark = completed.marks
+            mark = completed.mark
+            comment = completed.comment
 
-            excel_db.review_on_student(student.name, str(hw.id), str(mark))
+            data = str(mark)
+
+            if comment is not None and comment != '':
+                data += ', комментарий учителя: ' + comment
+
+            excel_db.review_on_student(student.name, str(hw.id), data)
 
     file_name = "/tmp/mark_table.xlsx"
 
