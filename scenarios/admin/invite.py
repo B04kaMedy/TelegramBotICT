@@ -39,7 +39,7 @@ def role_success(message):
     markup.add(KeyboardButton("Принять"))
     markup.add(KeyboardButton("Отклонить"))
 
-    if not authorized(message):
+    if User.from_telegram_nickname(username) is None:
         bot.send_message(message.chat.id, 'Этот пользователь еще не зарегистрировался! '
                                           'Вы не можете пригласить его в группу!')
         send_main_menu(message)
