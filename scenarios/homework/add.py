@@ -14,7 +14,7 @@ def add_homework(message):
 def upload_homework(message):
     chat_id = message.chat.id
     homework_id = message.document.file_id
-    homework = Homework(file_telegram_id=homework_id, deadline="")
+    homework = Homework(file_telegram_id=homework_id, deadline="", group=message.current_group)
     session.add(homework)
     session.commit()
     bot.send_message(chat_id, "Файл загружен!")
