@@ -29,4 +29,4 @@ def send_main_menu(message):
     if group.user_has_role(user, Role.STUDENT):
         add_student_buttons(markup)
 
-    bot.send_message(message.chat.id, f"Ваша группа: {group.name}", reply_markup=markup)
+    bot.send_message(message.chat.id, f"Главное меню\nВаша группа: {group.name}", reply_markup=markup)
