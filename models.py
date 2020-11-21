@@ -61,7 +61,7 @@ class Homework(Base):
 
     group_id = Column(Integer, ForeignKey("groups.id"))
     group = relationship('Group', back_populates='homeworks')
-    completed_homeworks = relationship('CompletedHomeworks', back_populates='homework')
+    completed_homeworks = relationship('CompletedHomework', back_populates='homework')
 
 class CompletedHomework(Base):
     __tablename__ = 'completed_homeworks'
@@ -72,3 +72,8 @@ class CompletedHomework(Base):
 
     student_id = Column(Integer, ForeignKey("users.id"))
     student = relationship('User', back_populates='completed_homeworks')
+
+    marks = Column(Integer, nullable=True)
+
+    def is_checked(self):
+        return marks is not None
