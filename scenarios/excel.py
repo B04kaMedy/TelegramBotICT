@@ -38,4 +38,4 @@ def excel_export(message):
 
     converter.push_to_excel(file_name, group.name)
 
-    bot.send_document(message.chat.id, open(file_name))
+    bot.send_document(message.chat.id, open(file_name, 'rb'))
