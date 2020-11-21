@@ -6,14 +6,17 @@ from scenarios.main_menu import send_main_menu
 
 # dict: chat_id -> current group object
 current_groups = dict()
-# TODO: уебать это отседова в бд
+# TODO: убрать это отседова в бд
+
 
 @bot.middleware_handler(update_types=['message'])
 def set_current_group(bot_instance, message):
     message.current_group = current_groups.get(message.chat.id)
-    
+
+
 def has_not_group(message):
     return message.current_group is None
+
 
 @bot.message_handler(func=has_not_group)
 def select_group(message):
@@ -26,8 +29,10 @@ def select_group(message):
         markup.add(KeyboardButton(group.name))
 
     markup.add(KeyboardButton("Создать группу"))
-    bot.send_message(chat_id, "Выбери группу, в которой будешь ща работать\nНу или сам создай свою. Ы", reply_markup=markup)
+    bot.send_message(chat_id, "Пожалуйста, выбери свою группу\nИли создай новую.",
+                     reply_markup=markup)
     bot.register_next_step_handler(message, got_group)
+
 
 def got_group(message):
     if message.text == "Создать группу":
