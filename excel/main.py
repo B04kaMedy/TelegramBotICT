@@ -1,5 +1,5 @@
-from converter import *
-from excel_db import *
+from excel.converter import *
+from excel.excel_db import *
 
 
 def push_excel_test():
@@ -29,5 +29,17 @@ def pull_excel_test():
     push_to_excel('output.xlsx', 'test')
 
 
-push_excel_test()
-pull_excel_test()
+add_column('column')
+
+add_student('student')
+
+review_on_student('student', 'column', 'data 1')
+
+a = 1
+while a != 0:
+    review_on_student('student', 'column', str(a))
+    push_to_excel('output.xlsx', 'test')
+    a = int(input())
+
+# push_excel_test()
+# pull_excel_test()
