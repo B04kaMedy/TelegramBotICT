@@ -1,14 +1,11 @@
 from bot import bot
-from telebot import types
-from models import Homework, Group, CompletedHomework, User, Role
-from db import session
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
+from models import Role
 from filters import callback
-from scenarios.main_menu import send_main_menu
 
 from excel import excel_db, converter
 
-@bot.message_handler(func=callback("Экспорт в эксель"))
+
+@bot.message_handler(func=callback("Экспорт в Excel"))
 def excel_export(message):
     excel_db.clear_table()
 
@@ -16,8 +13,6 @@ def excel_export(message):
 
     students = group.users
     hws = group.homeworks
-
-    marks = dict()
 
     for hw in hws:
         excel_db.add_column(str(hw.id))

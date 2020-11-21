@@ -1,6 +1,7 @@
 def log(message: str) -> None:
     print(message)
 
+
 def get_answer() -> bool:
     answer = input()
 
@@ -8,4 +9,3 @@ def get_answer() -> bool:
         return True
     else:
         return False
-

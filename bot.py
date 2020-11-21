@@ -14,6 +14,7 @@ from scenarios.admin import invite, remove
 from scenarios.homework import add, check, delete, download, push, get_marks
 from scenarios import excel
 
+
 @bot.message_handler(func=everything)
 def wrong_message(msg):
-	bot.reply_to(msg, "Вы кажеца ашиблись")
+	bot.reply_to(msg, "Вы, кажется, ошиблись...")
