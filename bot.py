@@ -10,7 +10,7 @@ apihelper.ENABLE_MIDDLEWARE = True
 from scenarios import register
 from scenarios.groups import create as create_group
 from scenarios.groups import set_current as set_current_group
-from scenarios.admin import invite, remove
+from scenarios.admin import invite, remove, change_roles
 from scenarios.homework import add, check, download, push, get_marks, connection_with_teacher
 from scenarios import excel
 

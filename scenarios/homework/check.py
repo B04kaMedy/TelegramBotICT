@@ -79,7 +79,7 @@ def check_next3(message):
     bot.register_next_step_handler(message, check_next4)
 
 
-any_messages = False
+any_messages = dict()
 
 
 def check_next4(message):
@@ -88,19 +88,19 @@ def check_next4(message):
     global any_messages
 
     if message.text == 'Нет':
-        any_messages = False
+        any_messages[chat_id] = False
     else:
-        any_messages = True
+        any_messages[chat_id] = True
         bot.send_message(chat_id, "Ваш комментарий:")
 
-    bot.register_next_step_handler(message, check_next4)
+    bot.register_next_step_handler(message, check_end)
 
 
 def check_end(message):
     chat_id = message.chat.id
     completed_homework = states[chat_id]
 
-    if any_messages:
+    if any_messages[chat_id]:
         completed_homework.comment = message.text
     else:
         completed_homework.comment = None

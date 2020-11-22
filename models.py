@@ -5,10 +5,9 @@ from enum import Enum as PythonEnum
 
 
 class Role(PythonEnum):
-    ADMIN = 'Администратор'
-    # ELDER = 'Староста группы'
+    ADMIN_TEACHER = 'Администратор-ученик'
+    ADMIN_STUDENT = 'Администратор-студент'
     TEACHER = 'Учитель'
-    # MENTOR = 'Ментор'
     STUDENT = 'Студент'
 
 

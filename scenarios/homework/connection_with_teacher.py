@@ -13,7 +13,7 @@ def choose_teacher(message):
 
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
-    for user in message.users:
+    for user in message.current_group.users:
         if message.current_group.user_has_role(user, Role.TEACHER):
             markup.add(KeyboardButton(user.name))
 
@@ -21,7 +21,7 @@ def choose_teacher(message):
     bot.register_next_step_handler(message, ask_teacher)
 
 
-username = ''
+usernames = dict()
 
 
 def ask_teacher(message):
@@ -33,7 +33,7 @@ def ask_teacher(message):
     else:
         global username
 
-        username = answer
+        usernames[chat_id] = answer
 
         bot.send_message(chat_id, 'Что бы Вы хотели спросить у своего любимого преподавателя? :)')
 
@@ -42,16 +42,19 @@ def ask_teacher(message):
 
 def the_question(message):
     chat_id = message.chat.id
-    msg = message.test
+    msg = message.text
 
-    user = session.query(User).filter_by(name=username).one()
+    # user = User.from_telegram_nickname(usernames[chat_id])
+    user = session.query(User).filter_by(name=usernames[chat_id]).one()
 
     me = User.from_telegram_id(chat_id)
-    user.inbox = str(user.inbox) + '\n' + 'новое сообщение от \'' + me.name + '\': ' + msg
+    # user.inbox = str(user.inbox) + '\n' + 'новое сообщение от \'' + me.name + '\': ' + msg
 
-    session.commit()
-
+    # session.commit()
+    
+    bot.send_message(user.telegram_id, f"Сообщение от пользователя {me.name}:\n{msg}")
     bot.send_message(chat_id, "Сообщение отправлено!")
+
     send_main_menu(message)
 
 

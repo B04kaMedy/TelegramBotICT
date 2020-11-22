@@ -14,7 +14,7 @@ def user_select(message):
     for user in message.current_group.users:
         markup.add(KeyboardButton(user.name))
     
-    bot.send_message(message, "Выберите человека:", reply_markup=markup)
+    bot.send_message(chat_id, "Выберите человека:", reply_markup=markup)
     bot.register_next_step_handler(message, change_roles)
 
 
@@ -33,7 +33,7 @@ def change_roles(message):
     for role in Role:
         markup.add(KeyboardButton(role.value))
 
-    bot.send_message(message, "Выберите новую роль:", reply_markup=markup)
+    bot.send_message(chat_id, "Выберите новую роль:", reply_markup=markup)
     bot.register_next_step_handler(message, option_select)
 
 
