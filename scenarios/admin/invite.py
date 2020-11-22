@@ -3,12 +3,13 @@ from filters import *
 from models import Role, User
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from scenarios.main_menu import send_main_menu
+from scenarios.groups import set_current
 
 
 @bot.message_handler(func=callback("Пригласить человека"))
 def invite(message):
     chat_id = message.chat.id
-    bot.send_message(chat_id, "Введите @username")
+    bot.send_message(chat_id, "Введите ник пользователя")
     bot.register_next_step_handler(message, invite_success)
 
 
@@ -17,7 +18,12 @@ user_names = dict()
 
 def invite_success(message):
     chat_id = message.chat.id
-    user_names[chat_id] = message.text 
+
+    uname: str = message.text
+    if uname.startswith("@"):
+        uname = uname[1:]
+
+    user_names[chat_id] = uname
 
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
@@ -40,8 +46,7 @@ def role_success(message):
     markup.add(KeyboardButton("Отклонить"))
 
     if User.from_telegram_nickname(username) is None:
-        bot.send_message(message.chat.id, 'Этот пользователь еще не зарегистрировался! '
-                                          'Вы не можете пригласить его в группу!')
+        bot.send_message(message.chat.id, "Слушай, тут такая штука: бот не может первый писать пользователю, это запрещено телегой чтобы не было спама\n¯\_(ツ)_/¯\nПопроси пж того пользователя зарегаца в боте, или посмотри мб ты ником ошибся")
         send_main_menu(message)
     else:
         to_user = User.from_telegram_nickname(username)
@@ -63,5 +68,7 @@ def accept_invitation(message):
         group.add_role_to_user(user, role)
 
         bot.send_message(chat_id, "Вы добавлены в группу!")
+        set_current.select_group(message)        
     else:
         bot.send_message(chat_id, "Окей. Отклонено.")
+        set_current.select_group(message)        

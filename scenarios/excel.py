@@ -18,7 +18,7 @@ def excel_export(message):
         excel_db.add_column(str(hw.id))
 
     for student in students:
-        if not group.user_has_role(student, Role.STUDENT):
+        if not user.is_student(group):
             continue
 
         excel_db.add_student(student.name)

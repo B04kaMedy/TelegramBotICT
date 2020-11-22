@@ -3,6 +3,7 @@ from models import User
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 from scenarios.groups import create
 from scenarios.main_menu import send_main_menu
+from filters import callback
 
 # dict: chat_id -> current group object
 current_groups = dict()
@@ -47,3 +48,8 @@ def got_group(message):
         send_main_menu(message)
     else:
         return select_group(message)
+
+@bot.message_handler(func=callback("Выйти из группы"))
+def exit_from_group(message):
+    del current_groups[message.chat.id]
+    return select_group(message)

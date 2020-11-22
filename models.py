@@ -5,7 +5,7 @@ from enum import Enum as PythonEnum
 
 
 class Role(PythonEnum):
-    ADMIN_TEACHER = 'Администратор-ученик'
+    ADMIN_TEACHER = 'Администратор-учитель'
     ADMIN_STUDENT = 'Администратор-студент'
     TEACHER = 'Учитель'
     STUDENT = 'Студент'
@@ -34,7 +34,7 @@ class Group(Base):
     def delete_user(self, user: 'User'):
         session.query(Group_User).filter_by(group_id=self.id, user_id=user.id).delete()
 
-    def user_has_role(self, user: 'User', role: Role):
+    def _user_has_role(self, user: 'User', role: Role):
         return session.query(Group_User).filter_by(group_id=self.id, user_id=user.id, role=role).count() > 0
 
 
@@ -61,6 +61,15 @@ class User(Base):
     def is_inbox_empty(self) -> bool:
         return self.inbox != '' or self.inbox is not None
 
+    def is_student(self, group: Group):
+        return group._user_has_role(self, Role.STUDENT) or group._user_has_role(self, Role.ADMIN_STUDENT) 
+        
+    def is_teacher(self, group: Group):
+        return group._user_has_role(self, Role.TEACHER) or group._user_has_role(self, Role.ADMIN_TEACHER) 
+
+    def is_admin(self, group: Group):
+        return group._user_has_role(self, Role.ADMIN_TEACHER) or group._user_has_role(self, Role.ADMIN_STUDENT)
+        
 
 class Homework(Base):
     __tablename__ = 'homeworks'

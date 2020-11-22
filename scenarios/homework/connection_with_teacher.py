@@ -14,7 +14,7 @@ def choose_teacher(message):
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
     for user in message.current_group.users:
-        if message.current_group.user_has_role(user, Role.TEACHER):
+        if user.is_teacher(message.current_group):
             markup.add(KeyboardButton(user.name))
 
     bot.send_message(chat_id, "Кому Вы хотите написать?", reply_markup=markup)

@@ -13,6 +13,7 @@ def add_teacher_buttons(markup):
     markup.add(KeyboardButton("Добавить дз"))
     markup.add(KeyboardButton("Проверить дз"))
     markup.add(KeyboardButton("Экспорт в Excel"))
+    markup.add(KeyboardButton("Сообщение всем ученикам"))
     # markup.add(KeyboardButton("Проверить входящие сообщения"))
 
 
@@ -26,15 +27,17 @@ def add_student_buttons(markup):
 
 def send_main_menu(message):
     group = message.current_group
-    user = User.from_telegram_id(message.chat.id)
+    user: User = User.from_telegram_id(message.chat.id)
 
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
 
-    if group.user_has_role(user, Role.ADMIN):
+    if user.is_admin(group):
         add_admin_buttons(markup)
-    if group.user_has_role(user, Role.TEACHER):
+    if user.is_teacher(group):
         add_teacher_buttons(markup)
-    if group.user_has_role(user, Role.STUDENT):
+    if user.is_student(group):
         add_student_buttons(markup)
 
-    bot.send_message(message.chat.id, f"Главное меню\nВаша группа: {group.name}", reply_markup=markup)
+    markup.add(KeyboardButton("Выйти из группы"))
+
+    bot.send_message(message.chat.id, f"Главное меню\nВыбранная группа: {group.name}", reply_markup=markup)
