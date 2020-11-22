@@ -5,11 +5,11 @@ from enum import Enum as PythonEnum
 
 
 class Role(PythonEnum):
-    ADMIN = 'admin'
-    ELDER = 'elder'
-    TEACHER = 'teacher'
-    MENTOR = 'mentor'
-    STUDENT = 'student'
+    ADMIN = 'Администратор'
+    # ELDER = 'Староста группы'
+    TEACHER = 'Учитель'
+    # MENTOR = 'Ментор'
+    STUDENT = 'Студент'
 
 
 class Group_User(Base):
