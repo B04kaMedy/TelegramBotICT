@@ -16,7 +16,7 @@ def get_marks(message):
     s = ''
     for hw in completed_homeworks:
         if hw.is_checked():
-            s += f'Дз {hw.id}, оценка: {hw.mark}'
+            s += f'Дз {hw.id}, оценка: {hw.marks}'
 
             if hw.has_comment():
                 s += f', комментарий: {hw.comment}'

@@ -25,7 +25,7 @@ def excel_export(message):
 
         for hw in hws:
             completed = hw.get_completed_from_student(student)
-            mark = completed.mark
+            mark = completed.marks
             comment = completed.comment
 
             data = str(mark)
